@@ -50,6 +50,7 @@ resource "azuread_service_principal_password" "sp_password" {
   end_date_relative    = "8760h" # 1 year expiry
 }
 
+/*
 resource "azurerm_role_definition" "infoblox_dns_role" {
   name  = "Custom DNS Resolver Full Management"
   scope = "/subscriptions/${var.subscription_id}"
@@ -96,3 +97,13 @@ output "client_id" {
 output "tenant_id" {
   value = data.azurerm_client_config.current.tenant_id
 }
+
+*/
+
+# Assign the "Contributor" Role to the Service Principal
+resource "azurerm_role_assignment" "infoblox_role_assignment" {
+  scope                = "/subscriptions/${var.subscription_id}"
+  role_definition_name = "Contributor"  # ✅ Assigns built-in role
+  principal_id         = azuread_service_principal.infoblox_sp.id
+}
+
