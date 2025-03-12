@@ -1,1 +1,1 @@
-[![Onboard Azure Account](https://img.shields.io/badge/Onboard_Azure-Click_to_Run-blue?style=for-the-badge&logo=azure)](https://github.com/iracic82/Azure_Discovery/azure-onboarding/actions/workflows/azure-onboard.yml)
+[![Onboard Azure Account](https://img.shields.io/badge/Onboard_Azure-Click_to_Run-blue?style=for-the-badge&logo=azure)](https://github.com/iracic82/Azure_Discovery/actions/workflows/azure-onboard.yml)
