@@ -47,7 +47,6 @@ resource "random_password" "sp_password" {
 
 resource "azuread_service_principal_password" "sp_password" {
   service_principal_id = azuread_service_principal.infoblox_sp.id
-  value                = random_password.sp_password.result  # ✅ Securely generated password
   end_date_relative    = "8760h" # 1 year expiry
 }
 
