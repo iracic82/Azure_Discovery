@@ -1,1 +1,1 @@
-1
+[![Onboard Azure Account](https://img.shields.io/badge/Onboard_Azure-Click_to_Run-blue?style=for-the-badge&logo=azure)](https://github.com/YOUR_GITHUB_USERNAME/azure-onboarding/actions/workflows/azure-onboard.yml)
