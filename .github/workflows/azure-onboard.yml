@@ -1,7 +1,20 @@
 name: Onboard Azure Account
 
 on:
-  workflow_dispatch:  # Allows manual trigger from GitHub UI
+  workflow_dispatch: 
+     inputs:
+      subscription_id:
+        description: "Azure Subscription ID"
+        required: true
+      client_id:
+        description: "Azure Client ID"
+        required: true
+      client_secret:
+        description: "Azure Client Secret"
+        required: true
+      tenant_id:
+        description: "Azure Tenant ID"
+        required: true  # Allows manual trigger from GitHub UI
 
 jobs:
   onboard:
