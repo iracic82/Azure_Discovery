@@ -1,27 +1,40 @@
 name: Onboard Azure Account
 
 on:
-  workflow_dispatch: # Allows manual trigger from GitHub Actions UI
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 jobs:
   onboard:
     runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform:1.3.5  # Runs Terraform inside a container
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install jq (for JSON parsing)
+        run: apt-get update && apt-get install -y jq
+
       - name: Login to Azure
+        id: azure_login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.3.5
+      - name: Extract Secrets and Set Environment Variables
+        run: |
+          echo "SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.subscriptionId')" >> $GITHUB_ENV
+          echo "CLIENT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.clientId')" >> $GITHUB_ENV
+          echo "CLIENT_SECRET=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.clientSecret')" >> $GITHUB_ENV
+          echo "TENANT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.tenantId')" >> $GITHUB_ENV
 
       - name: Initialize Terraform
         run: terraform init
 
       - name: Apply Terraform
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve \
+          -var "subscription_id=$SUBSCRIPTION_ID" \
+          -var "client_id=$CLIENT_ID" \
+          -var "client_secret=$CLIENT_SECRET" \
+          -var "tenant_id=$TENANT_ID"
