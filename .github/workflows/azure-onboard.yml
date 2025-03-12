@@ -16,9 +16,12 @@ jobs:
       - name: Install jq (for JSON parsing)
         run: apk add --no-cache jq
 
+    
+
       - name: Install Azure CLI
-        run: apk add --no-cache curl bash openssh-client ca-certificates python3 py3-pip && \
-             pip3 install azure-cli
+        run: |
+          apk add --no-cache curl bash openssh-client ca-certificates python3 py3-pip
+          pip install azure-cli
 
       - name: Login to Azure
         id: azure_login
