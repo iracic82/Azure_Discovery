@@ -24,8 +24,5 @@ Simply click the button below, enter your Azure credentials, and Terraform will 
 2️⃣ Enter your **Azure credentials** (Subscription ID, Client ID, Client Secret, Tenant ID).  
 3️⃣ Terraform **automatically provisions the required resources** for Infoblox discovery.  
 
-🚀 **Now your README is visually appealing and user-friendly!** Let me know if you need refinements. 🔥  
 
-### 🚀 **Deploy Now**
 
-[![Onboard Azure Account](https://img.shields.io/badge/Onboard_Azure-Click_to_Run-blue?style=for-the-badge&logo=azure)](https://github.com/iracic82/Azure_Discovery/actions/workflows/azure-onboard.yml)
