@@ -1,6 +1,31 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~>3.90.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~>2.40.0"
+    }
+  }
+}
+
 provider "azurerm" {
   features {}
+  subscription_id = var.subscription_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
 }
+
+provider "azuread" {
+  tenant_id       = var.tenant_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+}
+
+data "azurerm_client_config" "current" {}
 
 resource "azurerm_resource_group" "infoblox_rg" {
   name     = "InfobloxOnboardingRG"
@@ -14,10 +39,15 @@ resource "azuread_application" "infoblox_app" {
 resource "azuread_service_principal" "infoblox_sp" {
   application_id = azuread_application.infoblox_app.application_id
 }
+resource "random_password" "sp_password" {
+  length           = 32
+  special          = true
+  override_special = "!@#$%&*()-_=+[]{}<>:?"
+}
 
 resource "azuread_service_principal_password" "sp_password" {
   service_principal_id = azuread_service_principal.infoblox_sp.id
-  value                = "SuperSecretPassword123!" # Generate securely!
+  value                = random_password.sp_password.result  # ✅ Securely generated password
   end_date_relative    = "8760h" # 1 year expiry
 }
 
