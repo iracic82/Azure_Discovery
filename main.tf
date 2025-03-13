@@ -85,12 +85,12 @@ resource "azurerm_role_definition" "infoblox_dns_role" {
 }
 */
 
-resource "azurerm_role_assignment" "infoblox_role_assignment" {
-  scope                = "/subscriptions/${var.subscription_id}"
-  role_definition_name = "Network Contributor"
+#resource "azurerm_role_assignment" "infoblox_role_assignment" {
+#  scope                = "/subscriptions/${var.subscription_id}"
+#  role_definition_name = "Network Contributor"
   #principal_id         = azuread_service_principal.infoblox_sp.id
-   principal_id         = data.azurerm_client_config.current.object_id
-}
+ #  principal_id         = data.azurerm_client_config.current.object_id
+#}
 
 
 
