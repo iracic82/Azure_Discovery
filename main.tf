@@ -27,10 +27,10 @@ provider "azuread" {
 
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_resource_group" "infoblox_rg" {
-  name     = "InfobloxOnboardingRG"
-  location = "East US"
-}
+#resource "azurerm_resource_group" "infoblox_rg" {
+#  name     = "InfobloxOnboardingRG"
+#  location = "East US"
+#}
 
 #resource "azuread_application" "infoblox_app" {
 #  display_name = "InfobloxDiscovery"
@@ -50,7 +50,7 @@ resource "random_password" "sp_password" {
 #  end_date_relative    = "8760h" # 1 year expiry
 #}
 
-
+/*
 resource "azurerm_role_definition" "infoblox_dns_role" {
   name  = "Custom DNS Resolver Full Management"
   scope = "/subscriptions/${var.subscription_id}"
@@ -83,6 +83,7 @@ resource "azurerm_role_definition" "infoblox_dns_role" {
 
   assignable_scopes = ["/subscriptions/${var.subscription_id}"]
 }
+*/
 
 resource "azurerm_role_assignment" "infoblox_role_assignment" {
   scope                = "/subscriptions/${var.subscription_id}"
