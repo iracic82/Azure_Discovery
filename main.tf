@@ -52,7 +52,7 @@ resource "azuread_service_principal_password" "sp_password" {
 
 
 resource "azurerm_role_definition" "infoblox_dns_role" {
-  name  = "Custom DNS Resolver Full Management"
+  name  = "Custom Infoblox Full Management"
   scope = "/subscriptions/${var.subscription_id}"
 
   permissions {
