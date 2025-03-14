@@ -57,27 +57,55 @@ resource "azurerm_role_definition" "infoblox_dns_role" {
 
   permissions {
     actions = [
-      "Microsoft.Network/dnsResolvers/read",
-      "Microsoft.Network/dnsResolvers/write",
-      "Microsoft.Network/dnsResolvers/delete",
-      "Microsoft.Network/dnsResolvers/outboundEndpoints/read",
-      "Microsoft.Network/dnsResolvers/outboundEndpoints/write",
-      "Microsoft.Network/dnsResolvers/outboundEndpoints/delete",
-      "Microsoft.Network/dnsResolvers/outboundEndpoints/join/action",
-      "Microsoft.Network/dnsForwardingRulesets/read",
-      "Microsoft.Network/dnsForwardingRulesets/write",
-      "Microsoft.Network/dnsForwardingRulesets/delete",
-      "Microsoft.Network/dnsForwardingRulesets/join/action",
-      "Microsoft.Network/dnsForwardingRulesets/forwardingRules/read",
-      "Microsoft.Network/dnsForwardingRulesets/forwardingRules/write",
-      "Microsoft.Network/dnsForwardingRulesets/forwardingRules/delete",
-      "Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks/read",
-      "Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks/write",
-      "Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks/delete",
-      "Microsoft.Network/virtualNetworks/read",
-      "Microsoft.Network/virtualNetworks/listDnsResolvers/action",
-      "Microsoft.Network/virtualNetworks/subnets/read",
-      "Microsoft.Network/virtualNetworks/subnets/join/action"
+        //  Read access to ALL Azure resources
+        "*/read",
+
+        //  Full DNS Zone Management
+        "Microsoft.Network/dnsZones/read",
+        "Microsoft.Network/dnsZones/write",
+        "Microsoft.Network/dnsZones/delete",
+        "Microsoft.Network/dnsZones/list/action",
+
+        //  Full DNS Record Management (A, CNAME, TXT, MX, etc.)
+        "Microsoft.Network/dnsZones/A/read",
+        "Microsoft.Network/dnsZones/A/write",
+        "Microsoft.Network/dnsZones/A/delete",
+        "Microsoft.Network/dnsZones/CNAME/read",
+        "Microsoft.Network/dnsZones/CNAME/write",
+        "Microsoft.Network/dnsZones/CNAME/delete",
+        "Microsoft.Network/dnsZones/TXT/read",
+        "Microsoft.Network/dnsZones/TXT/write",
+        "Microsoft.Network/dnsZones/TXT/delete",
+        "Microsoft.Network/dnsZones/MX/read",
+        "Microsoft.Network/dnsZones/MX/write",
+        "Microsoft.Network/dnsZones/MX/delete",
+
+        //  Full DNS Resolver Management
+        "Microsoft.Network/dnsResolvers/read",
+        "Microsoft.Network/dnsResolvers/write",
+        "Microsoft.Network/dnsResolvers/delete",
+        "Microsoft.Network/dnsResolvers/outboundEndpoints/read",
+        "Microsoft.Network/dnsResolvers/outboundEndpoints/write",
+        "Microsoft.Network/dnsResolvers/outboundEndpoints/delete",
+        "Microsoft.Network/dnsResolvers/outboundEndpoints/join/action",
+
+        //  Full DNS Forwarding Management
+        "Microsoft.Network/dnsForwardingRulesets/read",
+        "Microsoft.Network/dnsForwardingRulesets/write",
+        "Microsoft.Network/dnsForwardingRulesets/delete",
+        "Microsoft.Network/dnsForwardingRulesets/join/action",
+        "Microsoft.Network/dnsForwardingRulesets/forwardingRules/read",
+        "Microsoft.Network/dnsForwardingRulesets/forwardingRules/write",
+        "Microsoft.Network/dnsForwardingRulesets/forwardingRules/delete",
+        "Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks/read",
+        "Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks/write",
+        "Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks/delete",
+
+        //  Virtual Network Read Access (Needed for DNS)
+        "Microsoft.Network/virtualNetworks/read",
+        "Microsoft.Network/virtualNetworks/listDnsResolvers/action",
+        "Microsoft.Network/virtualNetworks/subnets/read",
+        "Microsoft.Network/virtualNetworks/subnets/join/action"
     ]
   }
 
