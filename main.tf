@@ -28,8 +28,8 @@ provider "azuread" {
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_resource_group" "infoblox_rg" {
-  name     = "InfobloxOnboardingRG"
-  location = "East US"
+  name     = "InfobloxOnboardingRGPoC"
+  location = "North Europe"
 }
 
 resource "azuread_application" "infoblox_app" {
