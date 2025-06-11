@@ -1,15 +1,14 @@
-#output "sp_password" {
-#  value     = azuread_service_principal_password.sp_password.value
-#  sensitive = true  # ✅ Marks as sensitive to hide in logs
-#}
-
-output "client_id" {
-  description = "Azure AD Application (Service Principal) Client ID"
-  value       = azuread_application.infoblox_app.application_id
-}
-
 output "tenant_id" {
-  description = "Azure Tenant ID"
+  description = "The Azure Tenant ID where the Infoblox Service Principal was created"
   value       = data.azurerm_client_config.current.tenant_id
 }
 
+output "service_principal_object_id" {
+  description = "Object ID of the created Service Principal"
+  value       = azuread_service_principal.infoblox_sp.id
+}
+
+output "subscription_id" {
+  description = "The Azure Subscription ID where the role was assigned"
+  value       = var.subscription_id
+}
