@@ -19,7 +19,7 @@ variable "infoblox_app_id" {
 
 # Create the Service Principal in your tenant for Infoblox App
 resource "azuread_service_principal" "infoblox_sp" {
-  application_id = var.infoblox_app_id
+  client_id = var.infoblox_app_id
 }
 
 # Required for tenant_id output
