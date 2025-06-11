@@ -1,19 +1,9 @@
 variable "subscription_id" {
-  description = "Azure Subscription ID"
+  description = "Azure Subscription ID where permissions will be applied"
   type        = string
 }
 
-variable "client_id" {
-  description = "Azure Client ID"
-  type        = string
-}
-
-variable "client_secret" {
-  description = "Azure Client Secret"
-  type        = string
-}
-
-variable "tenant_id" {
-  description = "Azure Tenant ID"
+variable "infoblox_app_id" {
+  description = "Infoblox Application (Client) ID"
   type        = string
 }
