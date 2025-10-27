@@ -1,7 +1,23 @@
 # Infoblox Automated Workflow for Discovery and Onboarding Cloud Azure Account
 
-This workflow allows you to **automate the discovery and onboarding** of an Azure account into Infoblox.
-Simply click the button below, enter your **Infoblox Application ID**, and the workflow will automatically configure all Azure permissions.
+This **template repository** provides a **one-click solution** to automate Azure permissions for Infoblox integration.
+
+## 👥 For Customers
+
+**First time using this?** See [CUSTOMER_SETUP.md](CUSTOMER_SETUP.md) for 5-minute setup guide.
+
+**Ready to use?** See [QUICK_START.md](QUICK_START.md) for usage instructions.
+
+## 🏢 For Vendors
+
+**Sharing with customers?** See [VENDOR_GUIDE.md](VENDOR_GUIDE.md) for deployment model.
+
+---
+
+## Overview
+
+This workflow automates the discovery and onboarding of Azure accounts into Infoblox.
+Simply enter your **Infoblox Application ID**, and the workflow will automatically configure all Azure permissions.
 
 ---
 
