@@ -3,12 +3,13 @@ name: Onboard Azure Account for Infoblox DNS
 on:
   workflow_dispatch:
     inputs:
-      subscription_id:
-        description: "Azure Subscription ID"
-        required: true
       infoblox_app_id:
         description: "Infoblox Application (Client) ID from Infoblox Portal"
         required: true
+      subscription_id:
+        description: "Azure Subscription ID (optional - leave empty for Auto-Discover Multiple mode)"
+        required: false
+        default: ""
 
 jobs:
   onboard:
@@ -23,23 +24,24 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Install Terraform
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Azure CLI and Python dependencies
         run: |
-          sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
-          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-          sudo apt-get update && sudo apt-get install terraform
+          pip install azure-identity azure-mgmt-authorization azure-mgmt-resource azure-mgmt-subscription msgraph-sdk
 
-      - name: Set Terraform variables from inputs
-        run: |
-          echo "TF_VAR_subscription_id=${{ github.event.inputs.subscription_id }}" >> $GITHUB_ENV
-          echo "TF_VAR_infoblox_app_id=${{ github.event.inputs.infoblox_app_id }}" >> $GITHUB_ENV
-
-      - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform Apply
+      - name: Run Azure Discovery and Configuration
         env:
-          TF_VAR_subscription_id: ${{ env.TF_VAR_subscription_id }}
-          TF_VAR_infoblox_app_id: ${{ env.TF_VAR_infoblox_app_id }}
-        run: terraform apply -auto-approve
+          INFOBLOX_APP_ID: ${{ github.event.inputs.infoblox_app_id }}
+          AZURE_SUBSCRIPTION_ID: ${{ github.event.inputs.subscription_id }}
+        run: |
+          python configure_azure_permissions.py
+
+      - name: Display Configuration Summary
+        run: |
+          if [ -f azure_config_summary.txt ]; then
+            cat azure_config_summary.txt
+          fi
