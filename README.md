@@ -120,18 +120,34 @@ From the Infoblox Portal:
 ### 2. Configure GitHub Secrets
 You need to set up Azure credentials as a GitHub secret:
 
-1. Create an Azure Service Principal for GitHub Actions:
+**Step 2a:** Create an Azure Service Principal for GitHub Actions:
 ```bash
 az ad sp create-for-rbac --name "github-actions-infoblox" \
-  --role "Owner" \
+  --role "Contributor" \
   --scopes /subscriptions/{subscription-id} \
   --sdk-auth
 ```
 
-2. Copy the JSON output and add it as a secret named `AZURE_CREDENTIALS` in your GitHub repository:
+📋 Copy the JSON output - you'll need it in Step 2c.
+
+**Step 2b:** Grant Azure AD permissions (REQUIRED for automatic SP creation):
+```bash
+# Get the service principal object ID
+SP_ID=$(az ad sp list --display-name "github-actions-infoblox" --query "[0].id" -o tsv)
+
+# Assign Application Administrator role
+az rest --method POST \
+  --uri "https://graph.microsoft.com/v1.0/roleManagement/directory/roleAssignments" \
+  --headers "Content-Type=application/json" \
+  --body "{\"@odata.type\":\"#microsoft.graph.unifiedRoleAssignment\",\"roleDefinitionId\":\"9b895d92-2cd3-44c7-9d02-a6ac2d5ea5c3\",\"principalId\":\"$SP_ID\",\"directoryScopeId\":\"/\"}"
+```
+
+⚠️ This is required so the workflow can automatically create service principals.
+
+**Step 2c:** Add the secret to your GitHub repository:
    - Go to **Settings → Secrets and variables → Actions → New repository secret**
    - Name: `AZURE_CREDENTIALS`
-   - Value: Paste the JSON output
+   - Value: Paste the JSON output from Step 2a
 
 ---
 

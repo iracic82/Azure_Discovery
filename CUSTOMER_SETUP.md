@@ -20,9 +20,11 @@ Follow these steps **once** to set up your own automated workflow:
 
 ---
 
-### Step 2: Create Azure Service Principal (2 minutes)
+### Step 2: Create Azure Service Principal with Required Permissions (3 minutes)
 
-Open **Azure Cloud Shell** and run this command:
+Open **Azure Cloud Shell** and run ALL of these commands:
+
+**Step 2a: Create the service principal**
 
 ```bash
 az ad sp create-for-rbac \
@@ -34,20 +36,28 @@ az ad sp create-for-rbac \
 
 **Replace `{YOUR-SUBSCRIPTION-ID}`** with your actual subscription ID.
 
-📋 **Copy the entire JSON output** - you'll need it in the next step.
+📋 **IMPORTANT: Copy the entire JSON output** - you'll need it in Step 3.
 
-**Note:** The service principal also needs Azure AD permissions to work with service principals. After creating it, assign the **Application Administrator** role in Azure AD:
+---
+
+**Step 2b: Grant Azure AD permissions (REQUIRED!)**
+
+⚠️ **You MUST run this command** - without it, the workflow cannot create service principals automatically:
 
 ```bash
 # Get the service principal object ID
 SP_ID=$(az ad sp list --display-name "github-actions-infoblox" --query "[0].id" -o tsv)
 
-# Assign Application Administrator role
+# Assign Application Administrator role (required for automatic SP creation)
 az rest --method POST \
   --uri "https://graph.microsoft.com/v1.0/roleManagement/directory/roleAssignments" \
   --headers "Content-Type=application/json" \
   --body "{\"@odata.type\":\"#microsoft.graph.unifiedRoleAssignment\",\"roleDefinitionId\":\"9b895d92-2cd3-44c7-9d02-a6ac2d5ea5c3\",\"principalId\":\"$SP_ID\",\"directoryScopeId\":\"/\"}"
 ```
+
+✅ **Why is this needed?** The workflow needs to automatically create the Infoblox service principal in your Azure AD. The Contributor role (Step 2a) only gives subscription-level permissions, not Azure AD permissions.
+
+⏱️ **Wait 2-3 minutes** after running this command before using the workflow (allows permissions to propagate).
 
 ---
 
