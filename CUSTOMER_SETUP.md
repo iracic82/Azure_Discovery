@@ -59,13 +59,15 @@ az ad sp create-for-rbac \
    - Click "Create Application"
    - Copy the Application ID
 
-2. In your GitHub repository:
-   - Go to **Actions** tab
-   - Click **"Onboard Azure Account for Infoblox DNS"**
-   - Click **"Run workflow"**
+2. In **YOUR** GitHub repository (the one you created from template):
+   - Go to **Actions** tab (at the top of YOUR repository)
+   - Click **"Onboard Azure Account for Infoblox DNS"** (in the left sidebar)
+   - Click green **"Run workflow"** button (top right, above the workflow list)
    - Paste **Application ID**
    - **Leave Subscription ID empty**
-   - Click **"Run workflow"**
+   - Click green **"Run workflow"** button at the bottom
+
+**Important**: Make sure you're in YOUR repository, not the template repository!
 
 3. Wait for completion (2-5 minutes)
 

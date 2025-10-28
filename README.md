@@ -21,17 +21,29 @@ Simply enter your **Infoblox Application ID**, and the workflow will automatical
 
 ---
 
-## 🚀 **Deploy to Azure**
+## 🚀 **How to Run**
+
+### If you created this from the template:
+
+1. Go to the **Actions** tab (in YOUR repository)
+2. Click **"Onboard Azure Account for Infoblox DNS"**
+3. Click **"Run workflow"** button (top right)
+4. Fill in the inputs and run
+
+### If you're viewing the template repository:
+
 <table>
   <tr>
     <td><img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg" width="120"></td>
     <td>
       <a href="https://github.com/iracic82/Azure_Discovery/actions/workflows/azure-onboard.yml">
-        <img src="https://img.shields.io/badge/Deploy%20to%20Azure-Click%20to%20Run-blue?style=for-the-badge&logo=azure">
+        <img src="https://img.shields.io/badge/View%20Workflow-Template%20Only-blue?style=for-the-badge&logo=azure">
       </a>
     </td>
   </tr>
 </table>
+
+**Note**: Click "Use this template" first to create your own copy before running.
 
 ---
 
