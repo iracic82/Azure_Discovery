@@ -27,7 +27,7 @@ Open **Azure Cloud Shell** and run this command:
 ```bash
 az ad sp create-for-rbac \
   --name "github-actions-infoblox" \
-  --role "Owner" \
+  --role "Contributor" \
   --scopes /subscriptions/{YOUR-SUBSCRIPTION-ID} \
   --sdk-auth
 ```
@@ -35,6 +35,19 @@ az ad sp create-for-rbac \
 **Replace `{YOUR-SUBSCRIPTION-ID}`** with your actual subscription ID.
 
 📋 **Copy the entire JSON output** - you'll need it in the next step.
+
+**Note:** The service principal also needs Azure AD permissions to work with service principals. After creating it, assign the **Application Administrator** role in Azure AD:
+
+```bash
+# Get the service principal object ID
+SP_ID=$(az ad sp list --display-name "github-actions-infoblox" --query "[0].id" -o tsv)
+
+# Assign Application Administrator role
+az rest --method POST \
+  --uri "https://graph.microsoft.com/v1.0/roleManagement/directory/roleAssignments" \
+  --headers "Content-Type=application/json" \
+  --body "{\"@odata.type\":\"#microsoft.graph.unifiedRoleAssignment\",\"roleDefinitionId\":\"9b895d92-2cd3-44c7-9d02-a6ac2d5ea5c3\",\"principalId\":\"$SP_ID\",\"directoryScopeId\":\"/\"}"
+```
 
 ---
 
